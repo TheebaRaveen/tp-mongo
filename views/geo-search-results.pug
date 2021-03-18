@@ -1,28 +1,34 @@
 html
    head
-       title Recherche
+       title Recherche equipements sportifs
        link(rel="stylesheet", type="text/css", href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css")
        link(rel="stylesheet", type="text/css", href="static/style.css")
        script(type="text/javascript", src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js")
 
    body
-     h1 Recherche
-     form(action = "/geo-search-results", method = "GET")
+     h1 Recherche d'équipements sportifs
+     div(id = 'map')
+     form(action = "/geo-search-results", method = "GET" id='form')
          div
-            label(for = "Latitude") Latitude:
+            label(for = "Latitude") Latitude :
             input(name = "latitude" value = 48.86)
          br
          div
-            label(for = "Longitude") Longitude:
+            label(for = "Longitude") Longitude :
             input(name = "longitude" value = 2.344)
          br
          div
-            label(for = "Radius") Radius:
+            label(for = "Radius") Radius :
             input(name = "radius" value = 0.003)
          br
+         div
+            label(for = "Filtre") Filtre titre :
+            input(name = "filtreTitre" value = "")
+         br
+         button(type = "button" id="toCenter") ToCenter
+         button(type = "button" id="fromCenter") FromCenter
          button(type = "submit") Find
-     div(id = 'map')
-     div
+     div(id='result')
        each result in results
          div
            h2= result.properties.ins_nom

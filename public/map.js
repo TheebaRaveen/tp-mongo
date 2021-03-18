@@ -14,9 +14,9 @@ var map = new ol.Map({
        image: new ol.style.Circle({
          radius: 10,
          stroke: new ol.style.Stroke({
-         color: 'red',
-         width: 4
-       }),
+           color: 'red',
+           width: 4
+         }),
        fill: new ol.style.Fill({
          color: 'orange'})
        })
@@ -29,3 +29,22 @@ var map = new ol.Map({
    maxZoom: 20,
  })
 });
+
+var toCenter = document.getElementById("toCenter")
+var fromCenter = document.getElementById("fromCenter")
+
+var form = document.getElementById("form")
+toCenter.addEventListener("click", function(){
+  console.log("Coords center : ", ol.proj.toLonLat(map.getView().getCenter(), 'EPSG:3857'));
+
+  map.getView().setCenter(ol.proj.fromLonLat([parseFloat(form.elements.longitude.value), parseFloat(form.elements.latitude.value)]))
+  console.log("Coords maj:", form.elements.longitude.value, form.elements.latitude.value);
+})
+
+fromCenter.addEventListener("click", function(){
+  console.log("Coords center : ", ol.proj.toLonLat(map.getView().getCenter(), 'EPSG:3857'));
+  var coords = ol.proj.toLonLat(map.getView().getCenter(), 'EPSG:3857');
+  form.elements.longitude.value = coords[0]
+  form.elements.latitude.value = coords[1]
+  console.log("Coords maj:", form.elements.longitude.value, form.elements.latitude.value);
+})

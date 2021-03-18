@@ -1,4 +1,15 @@
 #map {
-   height: 400px;
-   width: 100%;
+   height: 500px;
+   width: 50%;
+   position : absolute;
+   left : 500px;
+}
+form {
+  position : absolute;
+  left : 20px;
+}
+#result {
+  position : absolute;
+  left: 20px;
+  top : 320px;
 }

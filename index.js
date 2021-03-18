@@ -24,18 +24,22 @@ app.use('/static', express.static('public'));
 
 // Requete puis resultat en HTML
 app.get('/geo-search-results', function(req, res){
-  console.log(req.query);
+ // req.query : recuperer les param de l'url ap un ?
 
  var latitude = parseFloat(req.query.latitude);
  var longitude = parseFloat(req.query.longitude);
  var radius = parseFloat(req.query.radius)
 
- var filter = {};
+ var filtreTitre = req.query.filtreTitre
+
+// Filtre
+ var filter = {"properties.ins_nom" : {$regex : ".*stade.*", $options : "i"}};
  if (Math.abs(longitude) > 0.00001 && Math.abs(latitude) > 0.00001) {
    filter.geometry = { "$geoWithin": { "$center": [ [ longitude, latitude ] , radius] } };
  }
- console.log("filter", filter, [ longitude, latitude, radius ]);
+ // console.log("filter", filter, [ longitude, latitude, radius ]);
 
+//
  mydb.collection('equip').find(filter).toArray(function(err, docs) {
    console.log("Found "+docs.length+" records");
    // afficher les resultats dans la console
@@ -44,6 +48,7 @@ app.get('/geo-search-results', function(req, res){
      results: docs
    });
  });
+
 })
 
 // Requete puis resultat en json
@@ -58,7 +63,7 @@ app.get('/geo-search-results-json', function(req, res){
  if (Math.abs(longitude) > 0.00001 && Math.abs(latitude) > 0.00001) {
    filter.geometry = { "$geoWithin": { "$center": [ [ longitude, latitude ] , radius] } };
  }
- console.log("filter", filter, [ longitude, latitude, radius ]);
+ // console.log("filter", filter, [ longitude, latitude, radius ]);
 
  mydb.collection('equip').find(filter).toArray(function(err, docs) {
    console.log("Found "+docs.length+" records");
